@@ -1,0 +1,38 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+def image_negative(image):
+# Image negative transformation
+negative_image = 255 - image
+return negative_image
+def piecewise_linear(image, r1, s1, r2, s2):
+# Piecewise linear transformation
+def pixel_val(pix, r1, s1, r2, s2):
+if 0 <= pix <= r1:
+return (s1 / r1) * pix
+elif r1 < pix <= r2:
+return ((s2 - s1) / (r2 - r1)) * (pix - r1) + s1
+else:
+return ((255 - s2) / (255 - r2)) * (pix - r2) + s2
+piecewise_image = np.vectorize(pixel_val)(image, r1, s1, r2, s2)
+return piecewise_image.astype(np.uint8)
+# Load an image
+image_path = 'img0.jpg'
+image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+# Apply image negative transformation
+negative_image = image_negative(image)
+# Apply piecewise linear transformation
+r1, s1, r2, s2 = 70, 0, 140, 255
+piecewise_image = piecewise_linear(image, r1, s1, r2, s2)
+# Display the images
+plt.figure(figsize=(10, 7))
+plt.subplot(1, 3, 1)
+plt.title('Original Image')
+plt.imshow(image, cmap='gray')
+plt.subplot(1, 3, 2)
+plt.title('Negative Image')
+plt.imshow(negative_image, cmap='gray')
+plt.subplot(1, 3, 3)
+plt.title('Piecewise Linear Image')
+plt.imshow(piecewise_image, cmap='gray')
+plt.show()
