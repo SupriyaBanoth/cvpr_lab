@@ -1,0 +1,8 @@
+import cv2
+import numpy as np
+i = cv2.imread('img.jpg', 0)
+blur = cv2.GaussianBlur(i,(5,5),0)
+log = cv2.Laplacian(blur, cv2.CV_64F) #7
+cv2.imshow("Marr-Hildreth", log)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
