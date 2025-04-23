@@ -1,0 +1,16 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.ndimage import binary_hit_or_miss
+img = np.array([[0,0,0,0,0],
+[0,1,1,1,0],
+[0,1,1,1,0],
+[0,1,1,1,0],
+[0,0,0,0,0]], dtype=np.uint8) #5
+se = np.array([[1,-1,1],
+[1,-1,1],
+[1,-1,1]])
+res = binary_hit_or_miss(img, se==1, se==0).astype(np.uint8) * 255
+plt.imshow(np.hstack([img*255, res]), cmap='gray')
+plt.title('Original | Hit or Miss')
+plt.axis('off')
+plt.show()
