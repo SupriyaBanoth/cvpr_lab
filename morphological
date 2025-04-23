@@ -1,0 +1,15 @@
+import cv2
+import numpy as np
+image = cv2.imread("img.jpg", cv2.IMREAD_GRAYSCALE)
+k = np.ones((5, 5), np.uint8)
+e = cv2.erode(image, k, iterations=1)
+d = cv2.dilate(image, k, iterations=1)
+o = cv2.morphologyEx(image, cv2.MORPH_OPEN, k)
+c = cv2.morphologyEx(image, cv2.MORPH_CLOSE, k) #4
+cv2.imshow("Original Image", image)
+cv2.imshow("Erosion", e)
+cv2.imshow("Dilation", d)
+cv2.imshow("Opening", o)
+cv2.imshow("Closing", c)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
